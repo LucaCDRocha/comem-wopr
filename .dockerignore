@@ -1,0 +1,6 @@
+.DS_Store
+.git
+README.md
+public
+node_modules
+dist

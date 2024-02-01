@@ -1,0 +1,24 @@
+name: wopr
+
+services:
+  rp:
+    image: nginx:1.25-alpine3.18-perl
+    ports:
+      - 14000:80
+    depends_on:
+      - app
+      - db
+    restart: always
+    volumes:
+      - ./site.conf:/etc/nginx/conf.d/default.conf:ro
+  app:
+    image: wopr/app
+    build: .
+    depends_on:
+      - db
+    environment:
+      WOPR_REDIS_URL: redis://db:6379/0
+    restart: always
+  db:
+    image: redis:7.2.4-alpine
+    restart: always
